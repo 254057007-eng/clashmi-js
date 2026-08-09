@@ -4,6 +4,14 @@
 
 ## 在线导入地址
 
+优先使用 jsDelivr：
+
+```text
+https://cdn.jsdelivr.net/gh/254057007-eng/clashmi-js@main/clashmi.js
+```
+
+Raw GitHub 备用地址：
+
 ```text
 https://raw.githubusercontent.com/254057007-eng/clashmi-js/main/clashmi.js
 ```
