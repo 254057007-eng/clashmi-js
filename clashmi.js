@@ -1,6 +1,6 @@
 /*
- * Clash Mi / Mihomo V2 本地实机测试覆写
- * 版本：2026.08.08-v2-test
+ * Clash Mi / Mihomo｜App Store Apple CN 定向验证版
+ * 版本：2026.08.09-appstore-cn-to-apple
  *
  * 设计原则：
  * - 机场只提供 proxies / proxy-providers；
@@ -9,7 +9,7 @@
  * - 未经实机验收，不得作为生产配置。
  */
 
-var TEMPLATE_VERSION = "2026.08.08-v2-test";
+var TEMPLATE_VERSION = "2026.08.09-appstore-cn-to-apple";
 
 // =========================
 // 可调参数
@@ -414,8 +414,9 @@ function buildRules() {
     "DOMAIN-SUFFIX,bytecdn.cn,💼 公司内容",
     "DOMAIN-SUFFIX,byteimg.com,💼 公司内容",
 
-    // Apple / Microsoft：中国集合优先保持直连，通用集合进入可手动切换的业务组。
-    "RULE-SET,apple-cn-domain,🎯 国内直连",
+    // App Store 定向验证：Apple CN 集合与通用 Apple 集合均进入苹果服务组，
+    // 以便一个“🍎 苹果服务”选择覆盖两类 Apple 请求；Microsoft CN 仍保持直连。
+    "RULE-SET,apple-cn-domain,🍎 苹果服务",
     "RULE-SET,microsoft-cn-domain,🎯 国内直连",
     "RULE-SET,apple-domain,🍎 苹果服务",
     "RULE-SET,microsoft-domain,☁️ 微软服务",
