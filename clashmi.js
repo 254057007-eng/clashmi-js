@@ -9,7 +9,7 @@
  * - 未经实机验收，不得作为生产配置。
  */
 
-var TEMPLATE_VERSION = "2026.08.10-reality-shortid-quote-v3";
+var TEMPLATE_VERSION = "2026.08.10-reality-shortid-quote-v2";
 
 // =========================
 // 可调参数
@@ -124,9 +124,9 @@ function sanitizeRealityNodes(config) {
       delete opts['short-id'];
       continue;
     }
-    // 为防止 YamlWriter 将纯数字/科学计数法形态重新写成 YAML 数值，
-    // 在 JSON 字符串字面量外再包一层 YAML 双引号；Mihomo 最终得到原始字符串。
-    opts['short-id'] = JSON.stringify(JSON.stringify(shortId));
+    // JSON.stringify 生成带双引号的字符串；YamlWriter 会把它写成 YAML 双引号字符串。
+    // Clash Mi 下游 Mihomo YAML 解码后得到原始 short-id 字符串，而不是数值。
+    opts['short-id'] = JSON.stringify(shortId);
   }
 }
 
