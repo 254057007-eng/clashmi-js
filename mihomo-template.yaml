@@ -1,0 +1,771 @@
+# Clash Mi / Mihomo 个人规则 YAML 模板
+# 由 clashmi.js 当前线上逻辑生成；节点由 Clash Mi 本地订阅注入，模板不含节点与订阅凭据。
+# 使用地址：https://cdn.jsdelivr.net/gh/254057007-eng/clashmi-js@main/mihomo-template.yaml
+# TUN 由 Clash Mi 本地核心设置管理；本模板不写 tun。
+
+proxies: []
+proxy-groups:
+- name: 🔁 全局故障切换
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: ♻️ 全局自动
+  type: url-test
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  tolerance: 200
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🫴 手动选择
+  type: select
+  proxies: []
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇯🇵 日本稳定
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇯🇵|日本|东京|東京|大阪|Japan|Tokyo|Osaka|\b(JP|JPN|NRT|HND|KIX|CTS|FUK)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇯🇵 日本自动测速
+  type: url-test
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  tolerance: 200
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇯🇵|日本|东京|東京|大阪|Japan|Tokyo|Osaka|\b(JP|JPN|NRT|HND|KIX|CTS|FUK)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇯🇵 日本
+  type: select
+  proxies:
+  - 🇯🇵 日本稳定
+  - 🇯🇵 日本自动测速
+  filter: (?i)(🇯🇵|日本|东京|東京|大阪|Japan|Tokyo|Osaka|\b(JP|JPN|NRT|HND|KIX|CTS|FUK)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇺🇸 美国稳定
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇺🇸|美国|美國|美西|美东|美東|洛杉矶|洛杉磯|圣何塞|聖何塞|硅谷|矽谷|西雅图|西雅圖|达拉斯|達拉斯|纽约|紐約|芝加哥|Chicago|Los\s*Angeles|San\s*Jose|Seattle|Dallas|New\s*York|United\s*States|\b(US|USA|LAX|SJC|SFO|SEA|JFK|ORD|DFW|IAD|ATL|MIA)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇺🇸 美国自动测速
+  type: url-test
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  tolerance: 200
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇺🇸|美国|美國|美西|美东|美東|洛杉矶|洛杉磯|圣何塞|聖何塞|硅谷|矽谷|西雅图|西雅圖|达拉斯|達拉斯|纽约|紐約|芝加哥|Chicago|Los\s*Angeles|San\s*Jose|Seattle|Dallas|New\s*York|United\s*States|\b(US|USA|LAX|SJC|SFO|SEA|JFK|ORD|DFW|IAD|ATL|MIA)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇺🇸 美国
+  type: select
+  proxies:
+  - 🇺🇸 美国稳定
+  - 🇺🇸 美国自动测速
+  filter: (?i)(🇺🇸|美国|美國|美西|美东|美東|洛杉矶|洛杉磯|圣何塞|聖何塞|硅谷|矽谷|西雅图|西雅圖|达拉斯|達拉斯|纽约|紐約|芝加哥|Chicago|Los\s*Angeles|San\s*Jose|Seattle|Dallas|New\s*York|United\s*States|\b(US|USA|LAX|SJC|SFO|SEA|JFK|ORD|DFW|IAD|ATL|MIA)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇸🇬 新加坡稳定
+  type: fallback
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇸🇬|新加坡|狮城|獅城|Singapore|\b(SG|SGP|SIN|XSP)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇸🇬 新加坡自动测速
+  type: url-test
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  tolerance: 200
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies:
+  - DIRECT
+  filter: (?i)(🇸🇬|新加坡|狮城|獅城|Singapore|\b(SG|SGP|SIN|XSP)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🇸🇬 新加坡
+  type: select
+  proxies:
+  - 🇸🇬 新加坡稳定
+  - 🇸🇬 新加坡自动测速
+  filter: (?i)(🇸🇬|新加坡|狮城|獅城|Singapore|\b(SG|SGP|SIN|XSP)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🌐 代理访问
+  type: select
+  proxies:
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - 🔁 全局故障切换
+  - ♻️ 全局自动
+  - 🫴 手动选择
+- name: 🚀 策略选择
+  type: select
+  proxies:
+  - 🌐 代理访问
+  - DIRECT
+- name: 🎯 国内直连
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 策略选择
+- name: 🛡️ DNS防泄露
+  type: select
+  proxies:
+  - 🌐 代理访问
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - 🫴 手动选择
+- name: ☁️ Cloudflare
+  type: select
+  proxies:
+  - DIRECT
+  - 🌐 代理访问
+  - 🫴 手动选择
+- name: 🛑 广告拦截
+  type: select
+  proxies:
+  - REJECT
+  - DIRECT
+- name: 📺 日本均衡
+  type: load-balance
+  strategy: sticky-sessions
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies: []
+  filter: (?i)(🇯🇵|日本|东京|東京|大阪|Japan|Tokyo|Osaka|\b(JP|JPN|NRT|HND|KIX|CTS|FUK)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 📺 新加坡均衡
+  type: load-balance
+  strategy: sticky-sessions
+  url: https://www.gstatic.com/generate_204
+  interval: 1800
+  timeout: 5000
+  lazy: true
+  max-failed-times: 3
+  expected-status: 204
+  proxies: []
+  filter: (?i)(🇸🇬|新加坡|狮城|獅城|Singapore|\b(SG|SGP|SIN|XSP)([0-9]+)?\b)
+  exclude-filter: (?i)(剩余|剩餘|流量|到期|官网|官網|套餐|重置|公告|客服|订阅|訂閱|机场|機場|工单|工單|邀请|邀請|返利|通知|频道|頻道|Traffic|Expire|Remaining|Reset|Subscribe|Subscription|Official|Website|Channel|Author|Email)
+  include-all-providers: true
+- name: 🤖 AI专属
+  type: select
+  proxies:
+  - 🇺🇸 美国稳定
+  - 🇸🇬 新加坡稳定
+  - 🌐 代理访问
+  - 🫴 手动选择
+- name: 🌍 TikTok
+  type: select
+  proxies:
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - 🌐 代理访问
+  - 🫴 手动选择
+- name: 🏢 飞书办公
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 策略选择
+- name: 💼 公司内容
+  type: select
+  proxies:
+  - DIRECT
+  - 🌐 代理访问
+  - 🚀 策略选择
+- name: 💰 金融证券
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 策略选择
+- name: 🍎 苹果服务
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 策略选择
+- name: ☁️ 微软服务
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 策略选择
+- name: 📺 视频服务
+  type: select
+  proxies:
+  - 📺 日本均衡
+  - 📺 新加坡均衡
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - 🌐 代理访问
+  - DIRECT
+- name: 🎬 流媒体稳定
+  type: select
+  proxies:
+  - 🇸🇬 新加坡稳定
+  - 🇯🇵 日本稳定
+  - 🇺🇸 美国稳定
+  - 🌐 代理访问
+- name: 🎞️ Emby CF
+  type: select
+  proxies:
+  - 🎬 流媒体稳定
+  - 🌐 代理访问
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - DIRECT
+- name: 📲 电报消息
+  type: select
+  proxies:
+  - 🇯🇵 日本稳定
+  - 🇸🇬 新加坡稳定
+  - 🇺🇸 美国稳定
+  - 🌐 代理访问
+- name: 🔎 Google
+  type: select
+  proxies:
+  - 🌐 代理访问
+  - 🫴 手动选择
+- name: 🐙 GitHub
+  type: select
+  proxies:
+  - 🌐 代理访问
+  - 🫴 手动选择
+rules:
+- DOMAIN-SUFFIX,local,DIRECT
+- DOMAIN-SUFFIX,lan,DIRECT
+- RULE-SET,private-domain,DIRECT
+- RULE-SET,private-ip,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- DOMAIN,a.mobaiemby.site,🎞️ Emby CF
+- DOMAIN,m.20269909.xyz,🎞️ Emby CF
+- DOMAIN,mygcdn.mobaiemby.site,DIRECT
+- DOMAIN,mygcns.mobaiemby.site,DIRECT
+- IP-CIDR,209.33.172.84/32,DIRECT,no-resolve
+- IP-CIDR,45.143.131.228/32,DIRECT,no-resolve
+- IP-CIDR,37.123.192.219/32,DIRECT,no-resolve
+- IP-CIDR,185.148.13.104/32,DIRECT,no-resolve
+- IP-CIDR,185.148.13.13/32,DIRECT,no-resolve
+- IP-CIDR,185.148.13.76/32,DIRECT,no-resolve
+- IP-CIDR,185.148.13.30/32,DIRECT,no-resolve
+- DOMAIN-SUFFIX,eastmoney.com,💰 金融证券
+- DOMAIN-SUFFIX,1234567.com.cn,💰 金融证券
+- DOMAIN-SUFFIX,10jqka.com.cn,💰 金融证券
+- DOMAIN-SUFFIX,xueqiu.com,💰 金融证券
+- DOMAIN-SUFFIX,hs.net,💰 金融证券
+- DOMAIN-SUFFIX,alipay.com,💰 金融证券
+- DOMAIN-SUFFIX,alipayobjects.com,💰 金融证券
+- DOMAIN-SUFFIX,antgroup.com,💰 金融证券
+- DOMAIN-SUFFIX,antfin-inc.com,💰 金融证券
+- DOMAIN-SUFFIX,cmbchina.com,💰 金融证券
+- DOMAIN-SUFFIX,icbc.com.cn,💰 金融证券
+- DOMAIN-SUFFIX,ccb.com,💰 金融证券
+- DOMAIN-SUFFIX,boc.cn,💰 金融证券
+- DOMAIN-SUFFIX,abchina.com,💰 金融证券
+- DOMAIN-SUFFIX,bankcomm.com,💰 金融证券
+- DOMAIN-SUFFIX,psbc.com,💰 金融证券
+- DOMAIN-SUFFIX,pingan.com,💰 金融证券
+- DOMAIN-SUFFIX,unionpay.com,💰 金融证券
+- DOMAIN-SUFFIX,unionpayintl.com,💰 金融证券
+- DOMAIN-SUFFIX,95516.com,💰 金融证券
+- DOMAIN-SUFFIX,tenpay.com,💰 金融证券
+- DOMAIN-SUFFIX,chatgpt.com,🤖 AI专属
+- DOMAIN-SUFFIX,openai.com,🤖 AI专属
+- DOMAIN-SUFFIX,oaistatic.com,🤖 AI专属
+- DOMAIN-SUFFIX,oaiusercontent.com,🤖 AI专属
+- DOMAIN-SUFFIX,chatgpt.livekit.cloud,🤖 AI专属
+- DOMAIN-SUFFIX,claude.ai,🤖 AI专属
+- DOMAIN-SUFFIX,anthropic.com,🤖 AI专属
+- DOMAIN,gemini.google.com,🤖 AI专属
+- DOMAIN,ai.google.dev,🤖 AI专属
+- DOMAIN-SUFFIX,aistudio.google.com,🤖 AI专属
+- DOMAIN-SUFFIX,generativelanguage.googleapis.com,🤖 AI专属
+- DOMAIN-SUFFIX,notebooklm.google.com,🤖 AI专属
+- DOMAIN-SUFFIX,perplexity.ai,🤖 AI专属
+- DOMAIN-SUFFIX,perplexity.com,🤖 AI专属
+- DOMAIN-SUFFIX,grok.com,🤖 AI专属
+- DOMAIN-SUFFIX,x.ai,🤖 AI专属
+- RULE-SET,ai-domain,🤖 AI专属
+- DOMAIN-SUFFIX,tiktok.com,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokv.com,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokcdn.com,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokcdn-us.com,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokv.us,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokd.net,🌍 TikTok
+- DOMAIN-SUFFIX,tiktokd.org,🌍 TikTok
+- DOMAIN-SUFFIX,tik-tokapi.com,🌍 TikTok
+- DOMAIN-SUFFIX,musical.ly,🌍 TikTok
+- DOMAIN-SUFFIX,muscdn.com,🌍 TikTok
+- DOMAIN-SUFFIX,ibyteimg.com,🌍 TikTok
+- DOMAIN-SUFFIX,ibytedtos.com,🌍 TikTok
+- DOMAIN-SUFFIX,byteoversea.com,🌍 TikTok
+- DOMAIN-SUFFIX,byteintlapi.com,🌍 TikTok
+- DOMAIN-KEYWORD,tiktok,🌍 TikTok
+- DOMAIN-KEYWORD,byteoversea,🌍 TikTok
+- RULE-SET,tiktok-domain,🌍 TikTok
+- DOMAIN-SUFFIX,larksuite.com,🏢 飞书办公
+- DOMAIN-SUFFIX,larksuitecdn.com,🏢 飞书办公
+- DOMAIN-SUFFIX,bdurl.net,🏢 飞书办公
+- DOMAIN-SUFFIX,toutiaocloud.com,🏢 飞书办公
+- RULE-SET,feishu-domain,🏢 飞书办公
+- DOMAIN-SUFFIX,snssdk.com,💼 公司内容
+- DOMAIN-SUFFIX,mail.qq.com,💼 公司内容
+- DOMAIN-SUFFIX,qqmail.com,💼 公司内容
+- DOMAIN-SUFFIX,foxmail.com,💼 公司内容
+- DOMAIN-SUFFIX,exmail.qq.com,💼 公司内容
+- DOMAIN-SUFFIX,smtp.qq.com,💼 公司内容
+- DOMAIN-SUFFIX,imap.qq.com,💼 公司内容
+- DOMAIN-SUFFIX,pop.qq.com,💼 公司内容
+- DOMAIN-SUFFIX,mail.163.com,💼 公司内容
+- DOMAIN-SUFFIX,mail.aliyun.com,💼 公司内容
+- DOMAIN-KEYWORD,qqmail,💼 公司内容
+- DOMAIN-SUFFIX,douyin.com,💼 公司内容
+- DOMAIN-SUFFIX,iesdouyin.com,💼 公司内容
+- DOMAIN-SUFFIX,douyincdn.com,💼 公司内容
+- DOMAIN-SUFFIX,douyinpic.com,💼 公司内容
+- DOMAIN-SUFFIX,douyinstatic.com,💼 公司内容
+- DOMAIN-SUFFIX,douyinvod.com,💼 公司内容
+- DOMAIN-SUFFIX,idouyinvod.com,💼 公司内容
+- DOMAIN-SUFFIX,pstatp.com,💼 公司内容
+- DOMAIN-SUFFIX,toutiao.com,💼 公司内容
+- DOMAIN-SUFFIX,ixigua.com,💼 公司内容
+- DOMAIN-SUFFIX,ixiguavideo.com,💼 公司内容
+- DOMAIN-SUFFIX,bilibili.com,💼 公司内容
+- DOMAIN-KEYWORD,douyin,💼 公司内容
+- RULE-SET,douyin-domain,💼 公司内容
+- DOMAIN-SUFFIX,bytecdn.cn,💼 公司内容
+- DOMAIN-SUFFIX,byteimg.com,💼 公司内容
+- RULE-SET,apple-cn-domain,🍎 苹果服务
+- RULE-SET,microsoft-cn-domain,🎯 国内直连
+- RULE-SET,apple-domain,🍎 苹果服务
+- RULE-SET,microsoft-domain,☁️ 微软服务
+- RULE-SET,onedrive-domain,☁️ 微软服务
+- DOMAIN-SUFFIX,music.youtube.com,📺 视频服务
+- RULE-SET,youtube-domain,📺 视频服务
+- RULE-SET,netflix-domain,🎬 流媒体稳定
+- RULE-SET,disney-domain,🎬 流媒体稳定
+- RULE-SET,primevideo-domain,🎬 流媒体稳定
+- RULE-SET,hbo-domain,🎬 流媒体稳定
+- RULE-SET,telegram-domain,📲 电报消息
+- RULE-SET,telegram-ip,📲 电报消息,no-resolve
+- RULE-SET,googlefcm-domain,🔎 Google
+- RULE-SET,google-domain,🔎 Google
+- RULE-SET,google-ip,🔎 Google,no-resolve
+- RULE-SET,github-domain,🐙 GitHub
+- RULE-SET,docker-domain,🐙 GitHub
+- RULE-SET,twitter-domain,🚀 策略选择
+- RULE-SET,twitter-ip,🚀 策略选择,no-resolve
+- RULE-SET,steam-domain,🚀 策略选择
+- RULE-SET,gfw-domain,🚀 策略选择
+- RULE-SET,cloudflare,☁️ Cloudflare
+- RULE-SET,ads-domain,🛑 广告拦截
+- RULE-SET,geolocation-cn,🎯 国内直连
+- RULE-SET,cn-ip,🎯 国内直连,no-resolve
+- MATCH,🚀 策略选择
+rule-providers:
+  private-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs
+    path: ./ruleset/v2-private-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  private-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs
+    path: ./ruleset/v2-private-ip.mrs
+    interval: 86400
+    proxy: DIRECT
+  geolocation-cn:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-cn.mrs
+    path: ./ruleset/v2-geolocation-cn.mrs
+    interval: 86400
+    proxy: DIRECT
+  cn-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs
+    path: ./ruleset/v2-cn-ip.mrs
+    interval: 86400
+    proxy: DIRECT
+  fakeip-filter:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/wwqgtxx/clash-rules@release/fakeip-filter.mrs
+    path: ./ruleset/v2-fakeip-filter.mrs
+    interval: 86400
+    proxy: DIRECT
+  cloudflare:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare.mrs
+    path: ./ruleset/v2-cloudflare.mrs
+    interval: 86400
+    proxy: DIRECT
+  ai-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs
+    path: ./ruleset/v2-ai-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  tiktok-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs
+    path: ./ruleset/v2-tiktok-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  douyin-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/douyin.mrs
+    path: ./ruleset/v2-douyin-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  feishu-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/feishu.mrs
+    path: ./ruleset/v2-feishu-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  apple-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple.mrs
+    path: ./ruleset/v2-apple-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  apple-cn-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple@cn.mrs
+    path: ./ruleset/v2-apple-cn-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  microsoft-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft.mrs
+    path: ./ruleset/v2-microsoft-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  microsoft-cn-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft@cn.mrs
+    path: ./ruleset/v2-microsoft-cn-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  onedrive-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/onedrive.mrs
+    path: ./ruleset/v2-onedrive-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  youtube-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs
+    path: ./ruleset/v2-youtube-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  netflix-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs
+    path: ./ruleset/v2-netflix-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  disney-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/disney.mrs
+    path: ./ruleset/v2-disney-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  primevideo-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/primevideo.mrs
+    path: ./ruleset/v2-primevideo-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  hbo-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hbo.mrs
+    path: ./ruleset/v2-hbo-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  telegram-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs
+    path: ./ruleset/v2-telegram-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  telegram-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs
+    path: ./ruleset/v2-telegram-ip.mrs
+    interval: 86400
+    proxy: DIRECT
+  google-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs
+    path: ./ruleset/v2-google-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  google-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/google.mrs
+    path: ./ruleset/v2-google-ip.mrs
+    interval: 86400
+    proxy: DIRECT
+  googlefcm-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/googlefcm.mrs
+    path: ./ruleset/v2-googlefcm-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  github-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs
+    path: ./ruleset/v2-github-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  docker-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/docker.mrs
+    path: ./ruleset/v2-docker-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  gfw-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/gfw.mrs
+    path: ./ruleset/v2-gfw-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  twitter-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/twitter.mrs
+    path: ./ruleset/v2-twitter-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  twitter-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/twitter.mrs
+    path: ./ruleset/v2-twitter-ip.mrs
+    interval: 86400
+    proxy: DIRECT
+  steam-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam.mrs
+    path: ./ruleset/v2-steam-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+  ads-domain:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs
+    path: ./ruleset/v2-ads-domain.mrs
+    interval: 86400
+    proxy: DIRECT
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:1053
+  cache-algorithm: arc
+  use-hosts: true
+  respect-rules: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+  - rule-set:private-domain
+  - rule-set:fakeip-filter
+  - rule-set:geolocation-cn
+  - +.mygcdn.mobaiemby.site
+  - +.mygcns.mobaiemby.site
+  - '*.lan'
+  - '*.local'
+  - +.local
+  - +.localhost
+  - +.msftconnecttest.com
+  - +.msftncsi.com
+  - +.market.xiaomi.com
+  - time.*.com
+  - time.*.gov
+  - time.*.edu.cn
+  - time.*.apple.com
+  - time1.*.com
+  - time2.*.com
+  - time3.*.com
+  - time4.*.com
+  - time5.*.com
+  - time6.*.com
+  - time7.*.com
+  - ntp.*.com
+  - stun.*.*
+  - stun.*.*.*
+  default-nameserver:
+  - 223.5.5.5#DIRECT
+  - 119.29.29.29#DIRECT
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query#DIRECT
+  - https://doh.pub/dns-query#DIRECT
+  nameserver:
+  - https://dns.google/dns-query#🛡️ DNS防泄露
+  - https://doh.opendns.com/dns-query#🛡️ DNS防泄露
+  direct-nameserver:
+  - 223.6.6.6#DIRECT
+  - 119.29.29.29#DIRECT
+  direct-nameserver-follow-policy: false
+  nameserver-policy:
+    rule-set:private-domain,geolocation-cn:
+    - https://dns.alidns.com/dns-query#DIRECT
+    - https://doh.pub/dns-query#DIRECT
+    mygcdn.mobaiemby.site:
+    - https://dns.alidns.com/dns-query#DIRECT
+    - https://doh.pub/dns-query#DIRECT
+    mygcns.mobaiemby.site:
+    - https://dns.alidns.com/dns-query#DIRECT
+    - https://doh.pub/dns-query#DIRECT
+    a.mobaiemby.site:
+    - https://dns.google/dns-query#🛡️ DNS防泄露
+    - https://doh.opendns.com/dns-query#🛡️ DNS防泄露
+    m.20269909.xyz:
+    - https://dns.google/dns-query#🛡️ DNS防泄露
+    - https://doh.opendns.com/dns-query#🛡️ DNS防泄露
+    ? rule-set:ai-domain,tiktok-domain,telegram-domain,google-domain,youtube-domain,netflix-domain,disney-domain,primevideo-domain,hbo-domain
+    : - https://dns.google/dns-query#🛡️ DNS防泄露
+      - https://doh.opendns.com/dns-query#🛡️ DNS防泄露
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+      - 80
+      - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+      - 443
+      - 8443
+    QUIC:
+      ports:
+      - 443
+      - 8443
