@@ -9,7 +9,7 @@
  * - 未经实机验收，不得作为生产配置。
  */
 
-var TEMPLATE_VERSION = "2026.08.10-reality-node-guard";
+var TEMPLATE_VERSION = "2026.08.10-reality-shortid-quote";
 
 // =========================
 // 可调参数
@@ -102,37 +102,31 @@ function mergeExcludeFilter(oldValue, appendValue) {
   return "(?i)(" + String(oldValue) + "|" + appendValue + ")";
 }
 
-// REALITY 节点兼容：Mihomo 要求非空 short-id 为最多 16 位的偶数长度十六进制。
-// 错误值无法推导服务端真实 short-id，故只能过滤异常 VLESS+REALITY 节点，不能伪造修正。
-function invalidRealityNode(proxy) {
-  if (!proxy || String(proxy.type || '').toLowerCase() !== 'vless') return false;
-  var opts = proxy['reality-opts'];
-  // 仅 public-key 非空时 Mihomo 才启用 REALITY 解析；避免误伤普通 VLESS。
-  if (!opts || typeof opts !== 'object' || Array.isArray(opts) || !opts['public-key']) return false;
-  if (!Object.prototype.hasOwnProperty.call(opts, 'short-id')) return false;
-  var raw = opts['short-id'];
-  if (raw === undefined) return false;
-  if (raw === null || typeof raw !== 'string') return true;
-  var shortId = raw.trim();
-  if (/^(null|undefined|none|nil)$/i.test(shortId)) return true;
-  if (shortId === '') { opts['short-id'] = ''; return false; }
-  if (!/^(?:[0-9a-fA-F]{2}){1,8}$/.test(shortId)) return true;
-  if (shortId !== raw) opts['short-id'] = shortId;
-  return false;
-}
-
-function filterInvalidRealityNodes(nodes) {
-  if (!Array.isArray(nodes)) return nodes;
-  var clean = [];
-  for (var i = 0; i < nodes.length; i++) {
-    if (!invalidRealityNode(nodes[i])) clean.push(nodes[i]);
-  }
-  return clean;
-}
-
+// REALITY 节点兼容：Clash Mi 的 JS 覆写会把完整订阅经 YAML→JSON→YAML 重写。
+// 例如合法字符串 short-id "473277e2" 若写成无引号 YAML，会被 Mihomo 视为科学计数法而报错。
+// 因此保留节点并强制有效 short-id 作为 YAML 字符串写回；无法安全还原的非法值仅删除该字段。
 function sanitizeRealityNodes(config) {
-  // 只处理覆写执行时已合并进 config 的 inline 节点；不改变订阅 URL、节点凭据或正常节点。
-  if (Array.isArray(config.proxies)) config.proxies = filterInvalidRealityNodes(config.proxies);
+  if (!Array.isArray(config.proxies)) return;
+  for (var i = 0; i < config.proxies.length; i++) {
+    var proxy = config.proxies[i];
+    if (!proxy || String(proxy.type || '').toLowerCase() !== 'vless') continue;
+    var opts = proxy['reality-opts'];
+    if (!opts || typeof opts !== 'object' || Array.isArray(opts) || !opts['public-key']) continue;
+    if (!Object.prototype.hasOwnProperty.call(opts, 'short-id')) continue;
+
+    var raw = opts['short-id'];
+    var shortId = null;
+    if (typeof raw === 'string') shortId = raw.trim();
+    // 已被客户端 YAML 解析为数值时无法恢复原始前导零；仅保留安全整数。
+    else if (typeof raw === 'number' && isFinite(raw) && Math.floor(raw) === raw && Math.abs(raw) <= 9007199254740991) shortId = String(raw);
+
+    if (shortId === null || !/^(?:[0-9a-fA-F]{2}){0,8}$/.test(shortId)) {
+      delete opts['short-id'];
+      continue;
+    }
+    // 使用 JSON 字符串字面量，确保 YamlWriter 输出后仍保留 YAML 引号。
+    opts['short-id'] = JSON.stringify(shortId);
+  }
 }
 
 // 保留订阅 URL/header 等字段，仅统一不依赖机场策略组的下载路径、刷新、健康检查、信息节点排除及来源前缀。
