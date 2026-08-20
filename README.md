@@ -62,10 +62,3 @@ iOS 上不要依赖后台定时更新；以 Clash Mi 内手动“更新覆写”
 - 修改前请先保留当前 Git 提交；出现问题可用 GitHub 的 Revert 回退。
 - Mihomo 不支持 Shadowrocket 的 `USER-AGENT` 规则，因此不使用该语法。
 
-## YAML 模板（由 clashmi.js 逻辑生成）
-
-节点由 Clash Mi 本地订阅注入；TUN 由本地核心设置管理。
-
-```text
-https://cdn.jsdelivr.net/gh/254057007-eng/clashmi-js@main/mihomo-template.yaml
-```
