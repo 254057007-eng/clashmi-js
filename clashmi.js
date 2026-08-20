@@ -482,7 +482,7 @@ function buildRules() {
   rules = rules.concat([
     "RULE-SET,geolocation-cn,🎯 国内直连",
     "RULE-SET,cn-ip,🎯 国内直连,no-resolve",
-    "MATCH,🚀 策略选择"
+    "MATCH,🐟 漏网之鱼"
   ]);
 
   return rules;
@@ -622,6 +622,7 @@ function main(config) {
   addIf(proxyChoices, "🫴 手动选择");
   push({ name: "🌐 代理访问", type: "select", proxies: proxyChoices });
   push({ name: "🚀 策略选择", type: "select", proxies: ["🌐 代理访问", "DIRECT"] });
+  push({ name: "🐟 漏网之鱼", type: "select", proxies: ["🌐 代理访问", "DIRECT"] });
   push({ name: "🎯 国内直连", type: "select", proxies: ["DIRECT", "🚀 策略选择"] });
   var dnsChoices = ["🌐 代理访问"];
   addExisting(dnsChoices, "🇯🇵 日本稳定");
