@@ -296,8 +296,8 @@ function buildDns() {
       "rule-set:private-domain,geolocation-cn": directDns,
       "mygcdn.mobaiemby.site": directDns,
       "mygcns.mobaiemby.site": directDns,
-      "a.mobaiemby.site": remoteDns,
-      "m.20269909.xyz": remoteDns,
+      "a.mobaiemby.site": directDns,
+      "m.20269909.xyz": directDns,
       "rule-set:ai-domain,tiktok-domain,telegram-domain,google-domain,youtube-domain,netflix-domain,disney-domain,primevideo-domain,hbo-domain": remoteDns
     }
   };
@@ -331,9 +331,9 @@ function buildRules() {
     "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
     "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
 
-    // Emby：CF 线路与直连 CDN / IP 必须精确隔离；禁止宽泛 mobaiemby.site DIRECT。
-    "DOMAIN,a.mobaiemby.site,🎞️ Emby CF",
-    "DOMAIN,m.20269909.xyz,🎞️ Emby CF",
+    // Emby：按 Karing 全直连（4 域名 + IP 全部 DIRECT）。
+    "DOMAIN,a.mobaiemby.site,DIRECT",
+    "DOMAIN,m.20269909.xyz,DIRECT",
     "DOMAIN,mygcdn.mobaiemby.site,DIRECT",
     "DOMAIN,mygcns.mobaiemby.site,DIRECT",
     "IP-CIDR,209.33.172.84/32,DIRECT,no-resolve",
@@ -676,13 +676,6 @@ function main(config) {
   addExisting(mediaChoices, "🇰🇷 韩国稳定");
   addIf(mediaChoices, "🌐 代理访问");
   push({ name: "🎬 流媒体稳定", type: "select", proxies: mediaChoices });
-
-  var embyChoices = ["🎬 流媒体稳定", "🌐 代理访问"];
-  addExisting(embyChoices, "🇯🇵 日本稳定");
-  addExisting(embyChoices, "🇸🇬 新加坡稳定");
-  addExisting(embyChoices, "🇺🇸 美国稳定");
-  addIf(embyChoices, "DIRECT");
-  push({ name: "🎞️ Emby CF", type: "select", proxies: embyChoices });
 
   var telegramChoices = [];
   addExisting(telegramChoices, "🇯🇵 日本稳定");
