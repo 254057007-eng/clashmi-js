@@ -9,7 +9,7 @@
  * - 未经实机验收，不得作为生产配置。
  */
 
-var TEMPLATE_VERSION = "2026.10.30-v2-review-fix";
+var TEMPLATE_VERSION = "2026.10.30-v2-user-pick";
 
 // =========================
 // 可调参数
@@ -116,28 +116,17 @@ function sanitizeRealityNodes(config) {
 
     var raw = opts['short-id'];
     var shortId = null;
-    var lostLeadingZero = false;
     if (typeof raw === 'string') shortId = raw.trim();
     // 已被客户端 YAML 解析为数值时无法恢复原始前导零；仅保留安全整数。
-    else if (typeof raw === 'number' && isFinite(raw) && Math.floor(raw) === raw && Math.abs(raw) <= 9007199254740991) {
-      shortId = String(raw);
-      lostLeadingZero = true;
-    }
+    else if (typeof raw === 'number' && isFinite(raw) && Math.floor(raw) === raw && Math.abs(raw) <= 9007199254740991) shortId = String(raw);
 
     if (shortId === null || !/^(?:[0-9a-fA-F]{2}){0,8}$/.test(shortId)) {
       delete opts['short-id'];
-      // 非法值无法还原：给节点名加可见标记，便于在 Clash Mi 中一眼识别。
-      if (proxy.name && regexMatch(proxy.name, "REALITY") === false) {
-        proxy.name = proxy.name + " [REALITY-fix]";
-      }
       continue;
     }
     // JSON.stringify 生成带双引号的字符串；YamlWriter 会把它写成 YAML 双引号字符串。
     // Clash Mi 下游 Mihomo YAML 解码后得到原始 short-id 字符串，而不是数值。
     opts['short-id'] = JSON.stringify(shortId);
-    if (lostLeadingZero && proxy.name && proxy.name.indexOf("[REALITY-fix]") < 0) {
-      proxy.name = proxy.name + " [REALITY-fix]";
-    }
   }
 }
 
@@ -343,12 +332,8 @@ function buildRules() {
     "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
 
     // Emby：CF 线路与直连 CDN / IP 必须精确隔离；禁止宽泛 mobaiemby.site DIRECT。
-    // v2 已改为「按 Karing 全直连」，下方旧规则不再生成。
-
-    // Emby：与 Karing 保持一致，全部直连。
-    // IP 均为 /32 单机，本就专用，直接 no-resolve 直连即可（Mihomo 规则不支持 dst_port 附加匹配）。
-    "DOMAIN,a.mobaiemby.site,DIRECT",
-    "DOMAIN,m.20269909.xyz,DIRECT",
+    "DOMAIN,a.mobaiemby.site,🎞️ Emby CF",
+    "DOMAIN,m.20269909.xyz,🎞️ Emby CF",
     "DOMAIN,mygcdn.mobaiemby.site,DIRECT",
     "DOMAIN,mygcns.mobaiemby.site,DIRECT",
     "IP-CIDR,209.33.172.84/32,DIRECT,no-resolve",
@@ -723,7 +708,6 @@ function main(config) {
   config.mode = "rule";
   config.ipv6 = SETTINGS.ipv6;
   config.udp = true;
-  // tcp-concurrent 在不同 Mihomo 内核版本间行为不一致，v2 不再强制开启（回退内核默认值）。
   config["unified-delay"] = true;
   config["disable-keep-alive"] = false;
   config["keep-alive-interval"] = 15;
