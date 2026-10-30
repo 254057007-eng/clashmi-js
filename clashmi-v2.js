@@ -345,19 +345,19 @@ function buildRules() {
     // Emby：CF 线路与直连 CDN / IP 必须精确隔离；禁止宽泛 mobaiemby.site DIRECT。
     // v2 已改为「按 Karing 全直连」，下方旧规则不再生成。
 
-    // Emby：与 Karing 保持一致，全部直连（含端口精确匹配）。
-    // 注意：带端口约束时不能加 no-resolve，否则端口匹配不生效。
+    // Emby：与 Karing 保持一致，全部直连。
+    // IP 均为 /32 单机，本就专用，直接 no-resolve 直连即可（Mihomo 规则不支持 dst_port 附加匹配）。
     "DOMAIN,a.mobaiemby.site,DIRECT",
     "DOMAIN,m.20269909.xyz,DIRECT",
     "DOMAIN,mygcdn.mobaiemby.site,DIRECT",
     "DOMAIN,mygcns.mobaiemby.site,DIRECT",
-    "IP-CIDR,209.33.172.84/32,DIRECT,dst_port:80/80",
-    "IP-CIDR,45.143.131.228/32,DIRECT,dst_port:55555/55555",
-    "IP-CIDR,37.123.192.219/32,DIRECT,dst_port:55255/55255",
-    "IP-CIDR,185.148.13.104/32,DIRECT,dst_port:55255/55255",
-    "IP-CIDR,185.148.13.13/32,DIRECT,dst_port:55255/55255",
-    "IP-CIDR,185.148.13.76/32,DIRECT,dst_port:55255/55255",
-    "IP-CIDR,185.148.13.30/32,DIRECT,dst_port:55255/55255",
+    "IP-CIDR,209.33.172.84/32,DIRECT,no-resolve",
+    "IP-CIDR,45.143.131.228/32,DIRECT,no-resolve",
+    "IP-CIDR,37.123.192.219/32,DIRECT,no-resolve",
+    "IP-CIDR,185.148.13.104/32,DIRECT,no-resolve",
+    "IP-CIDR,185.148.13.13/32,DIRECT,no-resolve",
+    "IP-CIDR,185.148.13.76/32,DIRECT,no-resolve",
+    "IP-CIDR,185.148.13.30/32,DIRECT,no-resolve",
 
     // 金融证券 / 银行 / 支付。
     "DOMAIN-SUFFIX,eastmoney.com,💰 金融证券",
